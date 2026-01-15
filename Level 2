@@ -1,0 +1,557 @@
+// See https://aka.ms/new-console-template for more information
+
+#region GeneralMethode
+void PrintMessage(string failed)
+{
+    Console.WriteLine(failed);
+    Console.WriteLine("<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>");
+}
+
+void PrintValidat(string failed)
+{
+    Console.WriteLine("???????????????????????????");
+    Console.WriteLine(failed);
+    Console.WriteLine("...........................");
+}
+
+bool ReadQustion(out char choice)
+{
+    PrintMessage("are you want to continue y = yes , n = no");
+    bool bIsValidated = true;
+    bIsValidated = char.TryParse(Console.ReadLine(), out choice);
+    if (!bIsValidated)
+    {
+        PrintValidat("Please enter valid cahracter");
+        return true;
+    }
+    return false;
+}
+
+int[] CopyArrays(int[] inputOfArray)
+{
+    int[] nCopyTo = new int[inputOfArray.Length];
+    for (int i = 0; i < inputOfArray.Length; i++)
+    {
+        nCopyTo[i] = inputOfArray[i];
+    }
+    return nCopyTo;
+}
+string[] CopyArraysOfString(string[] arrayOfString)
+{
+    string[] nCopyTo = new string[arrayOfString.Length];
+    for (int i = 0; i < arrayOfString.Length; i++)
+    {
+        nCopyTo[i] = arrayOfString[i];
+    }
+    return nCopyTo;
+}
+int[] CopyHalfOfArrays(int[] inputOfArray, int userChoice)
+{
+    int[] nCopyTo = new int[userChoice];
+    for (int i = 0; i < userChoice; i++)
+    {
+        nCopyTo[i] = inputOfArray[i];
+    }
+    return nCopyTo;
+}
+int[] CopyOtherHalfArrays(int[] inputOfArray, int userChoice)
+{
+    // int nHalf = 0;
+    // if (inputOfArray.Length / 2 % 2 == 0)
+    // {
+    //     if (inputOfArray.Length == 5)
+    //         nHalf = (inputOfArray.Length / 2) + 1;
+    //     else
+    //         nHalf = inputOfArray.Length / 2;
+    // }
+    // else
+    //     nHalf = (inputOfArray.Length / 2) + 1;
+    int[] nCopyTo = new int[userChoice];
+    for (int i = 0; i < userChoice; i++)
+    {
+        nCopyTo[i] = inputOfArray[((inputOfArray.Length / 2) + i)];
+    }
+    return nCopyTo;
+}
+int[] CopyEndHalfofArrays(int[] inputOfArray, int userChoice)
+{
+    // int nHalf = 0;
+    // if (inputOfArray.Length / 2 % 2 == 0)
+    //     nHalf = inputOfArray.Length / 2;
+    // else
+    //     nHalf = (inputOfArray.Length / 2) + 1;
+    int[] nCopyTo = new int[userChoice];
+    for (int i = 0; i < userChoice; i++)
+    {
+        nCopyTo[i] = inputOfArray[inputOfArray.Length - i - 1];
+    }
+    return nCopyTo;
+}
+void PrintArryasOfNumbers(int[] inputOfArray)
+{
+    for (int i = 0; i < inputOfArray.Length; i++)
+    {
+        Console.WriteLine($"number ({i + 1}) of arrays: {inputOfArray[i]}");
+    }
+}
+void PrintArryasOfString(string[] arrayOfString)
+{
+    foreach (string cruunty in arrayOfString)
+    {
+        Console.WriteLine($"String of arrays: ( {cruunty} )");
+        Console.WriteLine("--------------------------");
+    }
+}
+bool ReadNumber(string failed, out int number)
+{
+    Console.WriteLine(failed);
+    bool bIsValidated = true;
+    bIsValidated = int.TryParse(Console.ReadLine(), out number);
+    if (!bIsValidated)
+    {
+        PrintValidat("Please enter valid number");
+        return true;
+    }
+    return false;
+}
+
+
+bool ReadDecimalNumber(string failed, out decimal number)
+{
+    Console.WriteLine(failed);
+    bool bIsValidated = true;
+    bIsValidated = decimal.TryParse(Console.ReadLine(), out number);
+    if (!bIsValidated)
+    {
+        PrintValidat("Please enter valid number");
+        return true;
+    }
+    return false;
+}
+bool ReadDoubleNumber(string failed, out double number)
+{
+    Console.WriteLine(failed);
+    bool bIsValidated = true;
+    bIsValidated = double.TryParse(Console.ReadLine(), out number);
+    if (!bIsValidated)
+    {
+        PrintValidat("Please enter valid number");
+        return true;
+    }
+    return false;
+}
+
+bool ReadCharacter(out char choice)
+{
+
+    bool bIsValidated = true;
+    bIsValidated = char.TryParse(Console.ReadLine(), out choice);
+    if (!bIsValidated)
+    {
+        PrintValidat("Please enter valid cahracter");
+        return true;
+    }
+    return false;
+}
+
+
+void SelectionProgram(int choice)
+{
+    switch (choice)
+    {
+        case 1:
+            ProductStore();
+            break;
+        case 2:
+            storeCustmoer();
+            break;
+        case 3:
+            DescountAstore();
+            break;
+        case 4:
+            PrimeNumber();
+            break;
+        case 5:
+            ConvertBinaryToDecimal();
+            break;
+        case 6:
+            FibonacciSeries();
+            break;
+        case 7:
+            InputArraysOfNumbers();
+            break;
+        case 8:
+            InputArraysOfString();
+            break;
+        case 9:
+            HalfOfArray();
+            break;
+        case 10:
+            OtherHalfOfArray();
+            break;
+        case 11:
+            EndHalfOfArray();
+            break;
+        case 12:
+            CopyStartAndHalfAndEnd();
+            break;
+    }
+}
+double Power(double baseValue, double powerValue)
+{
+    if (powerValue == 0) return 1;
+    double dResult = 1;
+    for (int i = 0; i < powerValue; i++)
+    {
+        dResult = baseValue * dResult;
+    }
+    return dResult;
+}
+
+double Selectionprodact(int nResult, double total, int pieces)
+{
+    const double pricebooks = 24, priceElctronics = 149.95, clothing = 39.50;
+
+    switch (nResult)
+    {
+        case 1:
+            if (!ReadNumber("please enter number of pieces prodact: 1", out pieces))
+                return total;
+            total += pricebooks * pieces;
+            break;
+        case 2:
+            ReadNumber("please enter number of pieces prodact: 2", out pieces);
+            total += priceElctronics * pieces;
+            break;
+        case 3:
+            ReadNumber("please enter number of pieces prodact: 3", out pieces);
+            total += clothing * pieces;
+            break;
+    }
+    return total;
+}
+
+
+#endregion
+
+#region ProgramApp
+void ProductStore()
+{
+    // // Console.WriteLine("Welcome to prodact app");
+    // // Console.WriteLine("is a books $24 and elctronic $149.95 and clothing $39.50");
+    // // double dTotalPrice=((24*2)+149.95*1);
+    // // PrintMessage(string.Format("total price is {0:C}",dTotalPrice));
+
+    // welcome user app
+    PrintMessage("Welcome to prodact app");
+    // print product from user
+    PrintMessage("is a books $24 and elctronic $149.95 and clothing $39.50");
+    // take number prodact 
+    int nCountProdact = 0;
+    ReadNumber("Please enter count prodact", out nCountProdact);
+    // validat
+    int[] nResult = new int[nCountProdact];
+    double total = 0;
+    int pieces = 0;
+    for (int i = 0; i < nCountProdact; i++)
+    {
+        ReadNumber($"please enter number prodact {i + 1}", out nResult[i]);
+        total = Selectionprodact(nResult[i], total, pieces);
+    }
+    PrintMessage(string.Format("total price is {0:C}", total));
+}
+
+void FibonacciSeries()
+{
+    PrintMessage("Welcome to fibonacci series 0 to n app");
+    int nFirstNumber = 0;
+    int nScondeNumber = 0;
+    int nNextNumber = 0;
+    int nMax = 0;
+    int nStartNumber = 0;
+    if (ReadNumber("Please enter Start Number", out nStartNumber))
+        return;
+    if (ReadNumber("Please enter Max Number", out nMax))
+        return;
+    Console.WriteLine($"fibonacci is: {nFirstNumber = nStartNumber}");
+    Console.WriteLine($"fibonacci is: {nScondeNumber = (nStartNumber + 1)}");
+    for (int i = nStartNumber + 2; i < nMax; i++)
+    {
+        nNextNumber = nFirstNumber + nScondeNumber;
+        Console.WriteLine($"fibonacci is: {nNextNumber}");
+        nFirstNumber = nScondeNumber;
+        nScondeNumber = nNextNumber;
+    }
+}
+void DescountAstore()
+{
+    // double nTotalPrice = 0;
+    // int nSirtPrice = 32;
+    // int nPurchaseSirts = 3;
+    // double dBundle = nSirtPrice + (nSirtPrice * 0.5);
+    // int dBundels = nPurchaseSirts / 2;
+    // if (dBundels % 2 == 0)
+    //     nTotalPrice = dBundle * dBundels;
+    // else
+    //     nTotalPrice = (dBundle * dBundels) + nSirtPrice;
+    // Console.WriteLine("Total price is :" + nTotalPrice);
+
+    double dShirtPrice = 0;
+    if (ReadDoubleNumber("Please enter Shirt Price", out dShirtPrice))
+        return;
+    int nPurchaseShirt = 0;
+    if (ReadNumber("Please enter Purchase Shirt ", out nPurchaseShirt))
+        return;
+    int nDescount = 0;
+    if (ReadNumber("Please enter descount Proudact ", out nDescount))
+        return;
+    int nItemsCount = 0;
+    if (ReadNumber("Please enter number Purchase of descount proudact ", out nItemsCount))
+        return;
+    double dBoundelPrice = dShirtPrice + (dShirtPrice * nDescount / 100);
+    if (nPurchaseShirt % nItemsCount == 0)
+        Console.WriteLine((dBoundelPrice * (nPurchaseShirt / 2)));
+    else
+        Console.WriteLine(((dBoundelPrice * (nPurchaseShirt / 2)) + dShirtPrice));
+
+    // double nTotalPrice = 0;
+    // if (nPurchaseShirt % 2 == 0)
+    //     Console.WriteLine($"total Price is :{((nPurchaseShirt / 2) * (dShirtPrice + (dShirtPrice * 50 / 100)))}");
+    // nTotalPrice = ((nPurchaseShirt / 2) * (dShirtPrice + (dShirtPrice * 50 / 100)));
+    // else
+    //     Console.WriteLine($"{(double)(dShirtPrice + (dShirtPrice * 50 / 100)) * ((nPurchaseShirt / 2)) + dShirtPrice}");
+    // nTotalPrice = (dShirtPrice * (nPurchaseShirt / 2)) + (dShirtPrice + (dShirtPrice * 50 / 100));
+    // Console.WriteLine("total Price is : " + nTotalPrice);
+}
+
+void storeCustmoer()
+{
+    PrintMessage("Welcome to Custmoer a store app");
+    int nCountCustomer = 0;
+    if (ReadNumber("Please enter count Custmoer", out nCountCustomer))
+        return;
+    int nResultCustomer = nCountCustomer + (nCountCustomer * 10) / 100;
+    PrintMessage(string.Format("Number of customers at the weekend : {0}", nResultCustomer));
+}
+
+void InputArraysOfNumbers()
+{
+    PrintMessage("Welcome to copy array");
+    int nSizeArrays = 0;
+    if (ReadNumber("Please enter size of array", out nSizeArrays))
+        return;
+    int[] nNumber = new int[nSizeArrays];
+    int[] nCopyTo = new int[nSizeArrays];
+    for (int i = 0; i < nSizeArrays; i++)
+    {
+        if (ReadNumber($"Please enter Number {i + 1}", out nNumber[i]))
+            return;
+    }
+    nCopyTo = CopyArrays(nNumber);
+    PrintArryasOfNumbers(nCopyTo);
+}
+void InputArraysOfString()
+{
+    PrintMessage("Welcome to copy array of String");
+    int nSizeArrays = 0;
+    if (ReadNumber("Please enter size of array", out nSizeArrays))
+        return;
+    string[] sInputUser = new string[nSizeArrays];
+    string[] sOutputArray = new string[nSizeArrays];
+    for (int i = 0; i < nSizeArrays; i++)
+    {
+        Console.WriteLine($"Please enter String number: {i + 1}");
+        sInputUser[i] = Console.ReadLine();
+    }
+    sOutputArray = CopyArraysOfString(sInputUser);
+    PrintArryasOfString(sOutputArray);
+}
+
+
+void HalfOfArray()
+{
+    PrintMessage("Welcome to copy Half of array");
+    int nSizeArrays = 0;
+    if (ReadNumber("Please enter size of array", out nSizeArrays))
+        return;
+    int[] nNumber = new int[nSizeArrays];
+    int[] nCopyTo = new int[nSizeArrays];
+    for (int i = 0; i < nSizeArrays; i++)
+    {
+        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumber[i]))
+            return;
+    }
+    int nUserChoice = 0;
+    PrintMessage($"open numbers of array: {nSizeArrays}");
+    if (ReadNumber("please enter number plus Half array", out nUserChoice))
+        return;
+    if (nUserChoice > nSizeArrays)
+    {
+        PrintMessage("Please Enter a number smaller than or equal to half the size array");
+        return;
+    }
+    nCopyTo = CopyHalfOfArrays(nNumber, nUserChoice);
+    PrintArryasOfNumbers(nCopyTo);
+}
+void OtherHalfOfArray()
+{
+    PrintMessage("Welcome to copy Other Half array");
+    int nSizeArrays = 0;
+    if (ReadNumber("Please enter size of array", out nSizeArrays))
+        return;
+    int[] nNumber = new int[nSizeArrays];
+    int[] nCopyTo = new int[nSizeArrays];
+    for (int i = 0; i < nSizeArrays; i++)
+    {
+        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumber[i]))
+            return;
+    }
+    int nUserChoice = 0;
+    if (nSizeArrays % 2 != 0)
+        nSizeArrays++;
+    PrintMessage($"open numbers of array: {nSizeArrays / 2}");
+    if (ReadNumber("please enter number plus Half array", out nUserChoice))
+        return;
+    if (nUserChoice > nSizeArrays / 2)
+    {
+        PrintMessage("Please Enter a number smaller than or equal to half the size array");
+        return;
+    }
+    nCopyTo = CopyOtherHalfArrays(nNumber, nUserChoice);
+    PrintArryasOfNumbers(nCopyTo);
+}
+
+void EndHalfOfArray()
+{
+    PrintMessage("Welcome to copy End Half of array");
+    int nSizeArrays = 0;
+    if (ReadNumber("Please enter size of array", out nSizeArrays))
+        return;
+    int[] nNumber = new int[nSizeArrays];
+    int[] nCopyTo = new int[nSizeArrays];
+    for (int i = 0; i < nSizeArrays; i++)
+    {
+        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumber[i]))
+            return;
+    }
+    int nUserChoice = 0;
+    PrintMessage($"open numbers of array: {nSizeArrays}");
+    if (ReadNumber("please enter number plus Half array", out nUserChoice))
+        return;
+    if (nUserChoice > nSizeArrays)
+    {
+        PrintMessage("Please Enter a number smaller than or equal to half the size array");
+        return;
+    }
+    nCopyTo = CopyEndHalfofArrays(nNumber, nUserChoice);
+    PrintArryasOfNumbers(nCopyTo);
+}
+void CopyStartAndHalfAndEnd()
+{
+    PrintMessage("Welcome to copy array start and half and end");
+    int nSizeArrays = 0;
+    if (ReadNumber("Please enter Size of Array", out nSizeArrays))
+        return;
+    int[] nNumber = new int[nSizeArrays];
+    int[] nCopyArray = new int[nSizeArrays];
+    for (int i = 0; i < nSizeArrays; i++)
+    {
+        if (ReadNumber($"Please enter number: ( {i + 1} )", out nNumber[i]))
+            return;
+    }
+    PrintMessage($"open number of array {nSizeArrays}");
+    int nUserChoice = 0;
+    if (ReadNumber("please enter number plus start copy of array", out nUserChoice))
+        return;
+    nCopyArray = CopyHalfOfArrays(nNumber, nUserChoice);
+    PrintArryasOfNumbers(nCopyArray);
+    Console.WriteLine("-----------------------------");
+    nCopyArray = new int[] { nSizeArrays / 2 };
+    //int isCheck = nSizeArrays / 2;
+    PrintMessage($"open number of array {nSizeArrays / 2}");
+    if (ReadNumber("please enter number plus half copy of array", out nUserChoice))
+        return;
+    nCopyArray = CopyOtherHalfArrays(nNumber, nUserChoice);
+    PrintArryasOfNumbers(nCopyArray);
+    Console.WriteLine("-----------------------------");
+    nCopyArray = new int[] { nSizeArrays };
+    PrintMessage($"open number of array {nSizeArrays}");
+    if (ReadNumber("please enter number plus End copy of array", out nUserChoice))
+        return;
+    nCopyArray = CopyEndHalfofArrays(nNumber, nUserChoice);
+    PrintArryasOfNumbers(nCopyArray);
+}
+
+
+void ConvertBinaryToDecimal()
+{
+    PrintMessage("Welcome to Convert binnary to decimal");
+    //take String From user
+    PrintMessage("Pleas enter numbes of binnary");
+    string nUesr = Console.ReadLine();
+    double nDecimalValue = 0;
+    double nBaseBinnary = 0;
+    //creat for loob revers string
+    for (int i = nUesr.Length - 1; i >= 0; i--)
+    {
+        if (nUesr[i] == '1')
+        {
+            nDecimalValue += Power(2, nBaseBinnary);
+        }
+        nBaseBinnary++;
+    }
+    PrintMessage($"Decimal is {nDecimalValue}");
+}
+
+void PrimeNumber()
+{
+    PrintMessage("Please enter number cehiek is Prime app");
+    PrintMessage("Please enter number");
+    int Numbers = Convert.ToInt32(Console.ReadLine());
+    for (int i = 2; i <= Numbers; i++)
+    {
+        if (Numbers % i == 0 && Numbers != i)
+        {
+            Console.WriteLine("Not Prime");
+            return;
+        }
+        else if (i == Numbers)
+            Console.WriteLine("Prime");
+    }
+
+}
+
+#endregion
+
+#region MainProgram
+void MainProgarm()
+{
+    bool bContinue = true;
+    while (bContinue)
+    {
+        PrintMessage("""
+    Select program to run
+    1- Prodact store
+    2- Custmoer store
+    3- descount astore
+    4- Prime Number
+    5- Convert Bainary To Decimal
+    6- Fibonacci Series
+    7- Copy array of Numbers
+    8- Copy array of String
+    9- Copy half of Arrays
+    10- Copy Other Half Arrays
+    11- Copy End Half of array
+    12- Copy Array strat and Half and end
+    """);
+        int nChoice = 0;
+        if (ReadNumber("Please enter your app", out nChoice))
+            return;
+        SelectionProgram(nChoice);
+        char continueChoice = 'w';
+        bool bIsvalidated = ReadQustion(out continueChoice);
+        bContinue = (continueChoice == 'y');
+    }
+}
+MainProgarm();
+#endregion
