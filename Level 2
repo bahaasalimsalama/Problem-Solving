@@ -13,6 +13,16 @@ void PrintValidat(string failed)
     Console.WriteLine(failed);
     Console.WriteLine("...........................");
 }
+void LoobConcatenation2Arryas(int[] numbers1, int[] numbers2, int[] concatenation)
+{
+    for (int i = 0; i < ((numbers1.Length + numbers2.Length) - ((numbers1.Length + numbers2.Length) / 2)); i++)
+    {
+        if (i < numbers1.Length)
+            concatenation[i] = numbers1[i];
+        if (i < numbers2.Length)
+            concatenation[numbers1.Length + i] = numbers2[i];
+    }
+}
 
 bool ReadQustion(out char choice)
 {
@@ -25,6 +35,27 @@ bool ReadQustion(out char choice)
         return true;
     }
     return false;
+}
+
+void IsCheckSizeArray(string failed, out int nUserChoice, int Length)
+{
+    if (ReadNumber(failed, out nUserChoice))
+        return;
+    while (nUserChoice > Length)
+    {
+        PrintValidat("Please enter size small of equal array");
+        if (ReadNumber(failed, out nUserChoice))
+            return;
+    }
+}
+
+void ReadNumbersOfArrays(int sizeArrays, int[] number)
+{
+    for (int i = 0; i < sizeArrays; i++)
+    {
+        if (ReadNumber($"Please enter Number Of array: ( {i + 1} )", out number[i]))
+            return;
+    }
 }
 
 int[] CopyArrays(int[] inputOfArray)
@@ -70,6 +101,15 @@ int[] CopyOtherHalfArrays(int[] inputOfArray, int userChoice)
     for (int i = 0; i < userChoice; i++)
     {
         nCopyTo[i] = inputOfArray[((inputOfArray.Length / 2) + i)];
+    }
+    return nCopyTo;
+}
+int[] CopyReversHalfArrays(int[] inputOfArray, int userChoice)
+{
+    int[] nCopyTo = new int[userChoice];
+    for (int i = 0; i < userChoice; i++)
+    {
+        nCopyTo[i] = inputOfArray[((inputOfArray.Length / 2) - i)];
     }
     return nCopyTo;
 }
@@ -194,6 +234,9 @@ void SelectionProgram(int choice)
             break;
         case 12:
             CopyStartAndHalfAndEnd();
+            break;
+        case 13:
+            ConcatenationOfArrays();
             break;
     }
 }
@@ -340,14 +383,14 @@ void InputArraysOfNumbers()
     int nSizeArrays = 0;
     if (ReadNumber("Please enter size of array", out nSizeArrays))
         return;
-    int[] nNumber = new int[nSizeArrays];
+    int[] nNumbers = new int[nSizeArrays];
     int[] nCopyTo = new int[nSizeArrays];
     for (int i = 0; i < nSizeArrays; i++)
     {
-        if (ReadNumber($"Please enter Number {i + 1}", out nNumber[i]))
+        if (ReadNumber($"Please enter Number {i + 1}", out nNumbers[i]))
             return;
     }
-    nCopyTo = CopyArrays(nNumber);
+    nCopyTo = CopyArrays(nNumbers);
     PrintArryasOfNumbers(nCopyTo);
 }
 void InputArraysOfString()
@@ -374,11 +417,11 @@ void HalfOfArray()
     int nSizeArrays = 0;
     if (ReadNumber("Please enter size of array", out nSizeArrays))
         return;
-    int[] nNumber = new int[nSizeArrays];
+    int[] nNumbers = new int[nSizeArrays];
     int[] nCopyTo = new int[nSizeArrays];
     for (int i = 0; i < nSizeArrays; i++)
     {
-        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumber[i]))
+        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumbers[i]))
             return;
     }
     int nUserChoice = 0;
@@ -390,7 +433,7 @@ void HalfOfArray()
         PrintMessage("Please Enter a number smaller than or equal to half the size array");
         return;
     }
-    nCopyTo = CopyHalfOfArrays(nNumber, nUserChoice);
+    nCopyTo = CopyHalfOfArrays(nNumbers, nUserChoice);
     PrintArryasOfNumbers(nCopyTo);
 }
 void OtherHalfOfArray()
@@ -399,11 +442,11 @@ void OtherHalfOfArray()
     int nSizeArrays = 0;
     if (ReadNumber("Please enter size of array", out nSizeArrays))
         return;
-    int[] nNumber = new int[nSizeArrays];
+    int[] nNumbers = new int[nSizeArrays];
     int[] nCopyTo = new int[nSizeArrays];
     for (int i = 0; i < nSizeArrays; i++)
     {
-        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumber[i]))
+        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumbers[i]))
             return;
     }
     int nUserChoice = 0;
@@ -417,7 +460,7 @@ void OtherHalfOfArray()
         PrintMessage("Please Enter a number smaller than or equal to half the size array");
         return;
     }
-    nCopyTo = CopyOtherHalfArrays(nNumber, nUserChoice);
+    nCopyTo = CopyOtherHalfArrays(nNumbers, nUserChoice);
     PrintArryasOfNumbers(nCopyTo);
 }
 
@@ -427,11 +470,11 @@ void EndHalfOfArray()
     int nSizeArrays = 0;
     if (ReadNumber("Please enter size of array", out nSizeArrays))
         return;
-    int[] nNumber = new int[nSizeArrays];
+    int[] nNumbers = new int[nSizeArrays];
     int[] nCopyTo = new int[nSizeArrays];
     for (int i = 0; i < nSizeArrays; i++)
     {
-        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumber[i]))
+        if (ReadNumber($"Please enter Number: ( {i + 1} )", out nNumbers[i]))
             return;
     }
     int nUserChoice = 0;
@@ -443,7 +486,7 @@ void EndHalfOfArray()
         PrintMessage("Please Enter a number smaller than or equal to half the size array");
         return;
     }
-    nCopyTo = CopyEndHalfofArrays(nNumber, nUserChoice);
+    nCopyTo = CopyEndHalfofArrays(nNumbers, nUserChoice);
     PrintArryasOfNumbers(nCopyTo);
 }
 void CopyStartAndHalfAndEnd()
@@ -452,37 +495,132 @@ void CopyStartAndHalfAndEnd()
     int nSizeArrays = 0;
     if (ReadNumber("Please enter Size of Array", out nSizeArrays))
         return;
-    int[] nNumber = new int[nSizeArrays];
+    int[] nNumbers = new int[nSizeArrays];
     int[] nCopyArray = new int[nSizeArrays];
-    for (int i = 0; i < nSizeArrays; i++)
-    {
-        if (ReadNumber($"Please enter number: ( {i + 1} )", out nNumber[i]))
-            return;
-    }
+    ReadNumbersOfArrays(nSizeArrays, nNumbers);
     PrintMessage($"open number of array {nSizeArrays}");
     int nUserChoice = 0;
     if (ReadNumber("please enter number plus start copy of array", out nUserChoice))
         return;
-    nCopyArray = CopyHalfOfArrays(nNumber, nUserChoice);
+    nCopyArray = CopyHalfOfArrays(nNumbers, nUserChoice);
     PrintArryasOfNumbers(nCopyArray);
     Console.WriteLine("-----------------------------");
-    nCopyArray = new int[] { nSizeArrays / 2 };
-    //int isCheck = nSizeArrays / 2;
-    PrintMessage($"open number of array {nSizeArrays / 2}");
+    int nComplet = nSizeArrays;
+    if (nComplet % 2 != 0)
+    {
+        nComplet /= 2;
+        nComplet++;
+    }
+    else
+        nComplet /= 2;
+    nCopyArray = new int[nComplet];
+    PrintMessage($"open number of array {nComplet}");
     if (ReadNumber("please enter number plus half copy of array", out nUserChoice))
         return;
-    nCopyArray = CopyOtherHalfArrays(nNumber, nUserChoice);
+    nCopyArray = CopyOtherHalfArrays(nNumbers, nUserChoice);
+    PrintArryasOfNumbers(nCopyArray);
+
+    Console.WriteLine("-----------------------------");
+    PrintMessage($"open number of array {nComplet}");
+    if (ReadNumber("please enter number plus revesr half copy of array", out nUserChoice))
+        return;
+    nCopyArray = new int[nComplet];
+    nCopyArray = CopyReversHalfArrays(nNumbers, nUserChoice);
     PrintArryasOfNumbers(nCopyArray);
     Console.WriteLine("-----------------------------");
-    nCopyArray = new int[] { nSizeArrays };
+
+    nCopyArray = new int[nSizeArrays];
     PrintMessage($"open number of array {nSizeArrays}");
     if (ReadNumber("please enter number plus End copy of array", out nUserChoice))
         return;
-    nCopyArray = CopyEndHalfofArrays(nNumber, nUserChoice);
+    nCopyArray = CopyEndHalfofArrays(nNumbers, nUserChoice);
     PrintArryasOfNumbers(nCopyArray);
 }
 
 
+void Copy2ArraysStartAndHalfAndEnd(int[] numbers1)
+{
+
+    int[] nCopyArray = new int[numbers1.Length];
+    PrintMessage($"open number of array {numbers1.Length}");
+    int nUserChoice = 0;
+    // Read Size for whil loop and Is check input size form user not '!>' array  
+    IsCheckSizeArray("please enter number plus start copy of array", out nUserChoice, numbers1.Length);
+    nCopyArray = CopyHalfOfArrays(numbers1, nUserChoice);
+    // loop array for size and Print 
+    PrintArryasOfNumbers(nCopyArray);
+
+    Console.WriteLine("-----------------------------");
+    int nComplet = numbers1.Length;
+    if (nComplet % 2 != 0)
+    {
+        nComplet /= 2;
+        nComplet++;
+    }
+    else
+    {
+        nComplet /= 2;
+    }
+    nCopyArray = new int[nComplet];
+    PrintMessage($"open number of array {nComplet}");
+    // Read Size for whil loop and Is check input size form user not '!>' array  
+    IsCheckSizeArray("please enter number plus Other Half copy of array", out nUserChoice, numbers1.Length);
+    nCopyArray = CopyOtherHalfArrays(numbers1, nUserChoice);
+    PrintArryasOfNumbers(nCopyArray);
+    Console.WriteLine("-----------------------------");
+
+    PrintMessage($"open number of array {nComplet}");
+    // Read Size for whil loop and Is check input size form user not '!>' array  
+    IsCheckSizeArray("please enter number plus revesr half copy of array", out nUserChoice, numbers1.Length);
+    nCopyArray = new int[nComplet];
+    nCopyArray = CopyReversHalfArrays(numbers1, nUserChoice);
+    PrintArryasOfNumbers(nCopyArray);
+    Console.WriteLine("-----------------------------");
+
+    nCopyArray = new int[numbers1.Length];
+    PrintMessage($"open number of array {numbers1.Length}");
+    if (ReadNumber("please enter number plus End copy of array", out nUserChoice))
+        return;
+    nCopyArray = CopyEndHalfofArrays(numbers1, nUserChoice);
+    PrintArryasOfNumbers(nCopyArray);
+}
+
+void ConcatenationOfArrays()
+{
+    PrintMessage("Welcome to Concatenation of 2 Arrays App");
+    int nSizeArrays = 0;
+    if (ReadNumber("Please enter Size of Array number ( 1 )", out nSizeArrays))
+        return;
+    int[] nNumbers1 = new int[nSizeArrays];
+    ReadNumbersOfArrays(nSizeArrays, nNumbers1);
+    Console.WriteLine("============================");
+    if (ReadNumber("Please enter Size of Array number ( 2 )", out nSizeArrays))
+        return;
+    int[] nNumbers2 = new int[nSizeArrays];
+    ReadNumbersOfArrays(nSizeArrays, nNumbers2);
+    int[] nConcatenation = new int[nNumbers1.Length + nNumbers2.Length];
+    LoobConcatenation2Arryas(nNumbers1, nNumbers2, nConcatenation);
+    PrintArryasOfNumbers(nConcatenation);
+    Console.WriteLine("============================");
+    PrintMessage("Do you want to Divide the Arrays: Yes enter (y) no enter ( n )");
+    char cUserChoice = ' ';
+    while (((!ReadCharacter(out cUserChoice)) && cUserChoice == 'y'))
+    {
+        if (cUserChoice == 'y')
+        {
+            PrintMessage("do you want divide Array Number ( 1 ) or Array number ( 2 )");
+            ReadCharacter(out cUserChoice);
+            if (cUserChoice == '1')
+                Copy2ArraysStartAndHalfAndEnd(nNumbers1);
+            else
+                Copy2ArraysStartAndHalfAndEnd(nNumbers2);
+        }
+        PrintMessage("Do you want to Divide the Arrays: Yes enter (y) no enter ( n )");
+        if (ReadCharacter(out cUserChoice))
+            return;
+    }
+    PrintMessage("--->( Good by )<---");
+}
 void ConvertBinaryToDecimal()
 {
     PrintMessage("Welcome to Convert binnary to decimal");
@@ -543,6 +681,7 @@ void MainProgarm()
     10- Copy Other Half Arrays
     11- Copy End Half of array
     12- Copy Array strat and Half and end
+    13- Concatenation of Arrays
     """);
         int nChoice = 0;
         if (ReadNumber("Please enter your app", out nChoice))
