@@ -876,11 +876,13 @@ void differences1()
     // Input arrays
     int[] sat1 = new int[nSizeArrays1];
     ReadNumbersOfArrays(nSizeArrays1, sat1);
+    Console.Clear();
     Console.WriteLine("============================");
     if (ReadNumber("Please enter Size of Array number ( 2 )", out nSizeArrays1))
         return;
     int[] sat2 = new int[nSizeArrays1];
     ReadNumbersOfArrays(nSizeArrays1, sat2);
+    Console.Clear();
     // Array to store elements without duplicates
     int[] differences = new int[sat1.Length];
     // Get common valuse between two arrays
@@ -1107,17 +1109,20 @@ void Unique()
     if (ReadNumbersOfArrays(nSizeArrays1, Array1))
         return;
     Console.WriteLine("============================");
+    Console.Clear();
     if (ReadNumber("Please enter Size of Array number ( 2 )", out nSizeArrays1))
         return;
     int[] Array2 = new int[nSizeArrays1];
     if (ReadNumbersOfArrays(nSizeArrays1, Array2))
         return;
     Console.WriteLine("============================");
+    Console.Clear();
     if (ReadNumber("Please enter Size of Array number ( 3 )", out nSizeArrays1))
         return;
     int[] Array3 = new int[nSizeArrays1];
     if (ReadNumbersOfArrays(nSizeArrays1, Array3))
         return;
+    Console.Clear();
     // Array to store elements without duplicates
     int[] differences = new int[] { };
     int nCount = IsCheckUnique(ref differences, Array1);
@@ -1164,17 +1169,22 @@ void InterSection()
     if (ReadNumbersOfArrays(nSizeArrays1, Array1))
         return;
     Console.WriteLine("============================");
+    Console.Clear();
     if (ReadNumber("Please enter Size of Array number ( 2 )", out nSizeArrays1))
         return;
     int[] Array2 = new int[nSizeArrays1];
     if (ReadNumbersOfArrays(nSizeArrays1, Array2))
         return;
     Console.WriteLine("============================");
+    Console.Clear();
+    
     if (ReadNumber("Please enter Size of Array number ( 3 )", out nSizeArrays1))
         return;
+
     int[] Array3 = new int[nSizeArrays1];
     if (ReadNumbersOfArrays(nSizeArrays1, Array3))
         return;
+    Console.Clear();
 
     int[] differences = new int[0];
     differences = InterSectionOfArrays(Array1, Array2, differences);
